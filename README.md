@@ -32,7 +32,7 @@ module "transfer_sftp" {
 
 ### High-Level Architecture
 
-![High-Level Architecture](https://github.com/aws-ia/terraform-aws-transfer-family/blob/docs/overall-readme/images/AWS%20Transfer%20Family%20Architecture.png)
+![High-Level Architecture](https://github.com/aws-ia/terraform-aws-transfer-family/blob/dev/images/AWS%20Transfer%20Family%20Architecture.png)
 
 Figure 1: High-level architecture of AWS Transfer Family deployment using this Terraform module
 
@@ -56,22 +56,18 @@ This module supports custom DNS configurations for your Transfer Family server u
 
 #### Route 53 Integration
 
-module "transfer\_server" {
-source = "path/to/module"
+```
+dns_provider = "route53"
+custom_hostname = "sftp.example.com"
+route53_hosted_zone_name = "example.com."
+```
 
-dns\_provider = "route53"
-custom\_hostname = "sftp.example.com"
-route53\_hosted\_zone\_name = "example.com."
-}
+For Other DNS Providers:
 
-For Other Provider:
-
-module "transfer\_server" {
-source = "path/to/module"
-
-dns\_provider = "other"
-custom\_hostname = "sftp.example.com"
-}
+```
+dns_provider = "other"
+custom_hostname = "sftp.example.com"
+```
 
 #### The module checks
 
@@ -196,7 +192,6 @@ module "transfer_server" {
     Project     = "SFTP"
   }
 }
-
 ```
 
 ## Requirements
