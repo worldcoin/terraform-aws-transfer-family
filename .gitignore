@@ -52,3 +52,6 @@ tests/*.auto.tfvars
 checkov_reports/
 
 tf_security_scan.sh
+
+# Ignore macOS system files
+**/.DS_Store
