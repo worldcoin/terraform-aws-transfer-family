@@ -43,7 +43,7 @@ module "transfer_server" {
 module "sftp_users" {
   source = "../../modules/transfer-users"
   users  = local.users
-  create_test_user = false #NOTE: Test user is for demo purposes. Key and Access Management required for the created secrets 
+  create_test_user = true #NOTE: Test user is for demo purposes. Key and Access Management required for the created secrets 
 
   server_id = module.transfer_server.server_id
 
@@ -114,7 +114,51 @@ resource "aws_kms_key" "transfer_family_key" {
           "kms:Describe*"
         ]
         Resource = "*"
+      },
+      {
+        Sid    = "Allow Transfer and S3 Service"
+        Effect = "Allow"
+        Principal = {
+          Service = [
+            "transfer.amazonaws.com",
+            "s3.amazonaws.com"
+          ]
+        }
+        Action = [
+          "kms:Decrypt",
+          "kms:DescribeKey",
+          "kms:Encrypt",
+          "kms:GenerateDataKey*",
+          "kms:ReEncrypt*"
+        ]
+        Resource = "*"
+      },
+      {
+        Sid    = "Allow Transfer Family User Roles"
+        Effect = "Allow"
+        Principal = {
+          AWS = "*"
+        }
+        Action = [
+          "kms:Decrypt",
+          "kms:GenerateDataKey"
+        ]
+        Resource = "*"
+        Condition = {
+          StringLike = {
+            "aws:PrincipalArn": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/transfer-user-*"
+          }
+        }
       }
     ]
   })
+
+  tags = {
+    Purpose = "Transfer Family Encryption"
+  }
+}
+
+resource "aws_kms_alias" "transfer_family_key_alias" {
+  name          = "alias/transfer-family-key"
+  target_key_id = aws_kms_key.transfer_family_key.key_id
 }
