@@ -1,23 +1,22 @@
 <!-- BEGIN_TF_DOCS -->
-# AWS Transfer Family User Management Module
+# AWS Transfer Family User Import Module
 
-This module manages SFTP users and their access configurations for AWS Transfer Family servers.
+This module allows import of SFTP users for AWS Transfer Family servers.
 
 ## Overview
 
 The Transfer Users module handles:
 
-- SFTP user creation and management
-- SSH key management
+- SFTP user import
 - IAM role and policy configuration
 - S3 bucket access permissions
-- Optional test user creation with secure key storage
+- Optional test user creation
 
 ## Features
 
 ### User Management
 
-This module provides user management functionality for AWS Transfer Family. For example CSV configuration and implementation, see the ([../examples/sftp-public-endpoint-service-managed-S3/README.md#user-management](https://github.com/aws-ia/terraform-aws-transfer-family/blob/dev/examples/sftp-public-endpoint-service-managed-S3/.header.md)) in the SFTP public endpoint example.
+This module provides user import functionality for AWS Transfer Family. For example CSV configuration and implementation, see the ([../examples/sftp-public-endpoint-service-managed-S3/README.md#user-management](https://github.com/aws-ia/terraform-aws-transfer-family/blob/dev/examples/sftp-public-endpoint-service-managed-S3/.header.md)) in the SFTP public endpoint example.
 
 Key capabilities:
 
@@ -34,18 +33,17 @@ home_directory_mappings {
 
 ### Security Configuration
 
-- IAM role creation with least privilege principles
+- IAM role creation
 - Fine-grained S3 bucket access controls
-- KMS encryption support for S3 and Secrets Manager
-- Automated SSH key pair generation for test users
-- Secure storage of test user keys in AWS Secrets Manager
+- KMS encryption support for S3
+- SSH key pair generation for test users. NOT FOR PRODUCTION!
 
 ## Module Structure
 
 ### Core Resources
 
 - `aws_transfer_user`: Creates SFTP users in AWS Transfer Family
-- `aws_transfer_ssh_key`: Manages SSH keys for users
+- `aws_transfer_ssh_key`: Creates SSH keys for test user only
 - `aws_iam_role` and `aws_iam_role_policy`: Sets up IAM roles and policies for user access
 - `aws_secretsmanager_secret`: Stores SSH keys for test users (when enabled)
 
@@ -122,7 +120,7 @@ No modules.
 | <a name="input_create_test_user"></a> [create\_test\_user](#input\_create\_test\_user) | Whether to create a test SFTP user | `bool` | `false` | no |
 | <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | encryption key | `string` | `null` | no |
 | <a name="input_ssh_keys"></a> [ssh\_keys](#input\_ssh\_keys) | Map of username to SSH public key content | `map(string)` | `{}` | no |
-| <a name="input_users"></a> [users](#input\_users) | List of SFTP users | <pre>list(object({<br>    username   = string<br>    home_dir   = string<br>    public_key = string<br>    role_arn   = optional(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_users"></a> [users](#input\_users) | List of SFTP users | <pre>list(object({<br/>    username   = string<br/>    home_dir   = string<br/>    public_key = string<br/>    role_arn   = optional(string)<br/>  }))</pre> | `[]` | no |
 
 ## Outputs
 
