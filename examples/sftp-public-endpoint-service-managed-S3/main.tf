@@ -43,7 +43,7 @@ module "transfer_server" {
 module "sftp_users" {
   source = "../../modules/transfer-users"
   users  = local.users
-  create_test_user = false #NOTE: Test user will create test keys that is not recommended for PRODUCTION. Review permissions before proceeding!
+  create_test_user = false #NOTE: Test user is for demo purposes. Key and Access Management required for the created secrets 
 
   server_id = module.transfer_server.server_id
 
