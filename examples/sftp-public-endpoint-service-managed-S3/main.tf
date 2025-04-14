@@ -137,16 +137,19 @@ resource "aws_kms_key" "transfer_family_key" {
         Sid    = "Allow Transfer Family User Roles"
         Effect = "Allow"
         Principal = {
-          AWS = "*"
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"        
         }
         Action = [
           "kms:Decrypt",
           "kms:GenerateDataKey"
         ]
-        Resource = "*"
+        Resource = "arn:aws:kms:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key/${aws_kms_key.transfer_key.id}"
         Condition = {
           StringLike = {
             "aws:PrincipalArn": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/transfer-user-*"
+          },
+          StringEquals = {
+            "aws:PrincipalType": "AssumedRole"
           }
         }
       }
