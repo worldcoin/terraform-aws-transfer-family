@@ -143,7 +143,7 @@ resource "aws_kms_key" "transfer_family_key" {
           "kms:Decrypt",
           "kms:GenerateDataKey"
         ]
-        Resource = "arn:aws:kms:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key/${aws_kms_key.transfer_key.id}"
+        Resource = "*"
         Condition = {
           StringLike = {
             "aws:PrincipalArn": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/transfer-user-*"
