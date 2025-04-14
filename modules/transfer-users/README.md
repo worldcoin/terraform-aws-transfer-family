@@ -120,7 +120,7 @@ No modules.
 | <a name="input_create_test_user"></a> [create\_test\_user](#input\_create\_test\_user) | Whether to create a test SFTP user | `bool` | `false` | no |
 | <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | encryption key | `string` | `null` | no |
 | <a name="input_ssh_keys"></a> [ssh\_keys](#input\_ssh\_keys) | Map of username to SSH public key content | `map(string)` | `{}` | no |
-| <a name="input_users"></a> [users](#input\_users) | List of SFTP users | <pre>list(object({<br/>    username   = string<br/>    home_dir   = string<br/>    public_key = string<br/>    role_arn   = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_users"></a> [users](#input\_users) | List of SFTP users | <pre>list(object({<br>    username   = string<br>    home_dir   = string<br>    public_key = string<br>    role_arn   = optional(string)<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
