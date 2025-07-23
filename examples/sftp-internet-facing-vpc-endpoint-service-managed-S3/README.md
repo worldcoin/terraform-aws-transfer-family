@@ -166,7 +166,7 @@ Key points about VPC endpoint types:
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.7 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.10.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.95.0 |
 | <a name="requirement_awscc"></a> [awscc](#requirement\_awscc) | >= 0.24.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.0.0 |
@@ -182,10 +182,10 @@ Key points about VPC endpoint types:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | git::https://github.com/terraform-aws-modules/terraform-aws-s3-bucket.git | fc09cc6fb779b262ce1bee5334e85808a107d8a3 |
+| <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | git::https://github.com/terraform-aws-modules/terraform-aws-s3-bucket.git | v5.0.0 |
 | <a name="module_sftp_users"></a> [sftp\_users](#module\_sftp\_users) | ../../modules/transfer-users | n/a |
 | <a name="module_transfer_server"></a> [transfer\_server](#module\_transfer\_server) | ../.. | n/a |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | git::https://github.com/aws-ia/terraform-aws-vpc.git | da49a30fbfeb3890076b783be0abf8639f96f431 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | git::https://github.com/aws-ia/terraform-aws-vpc.git | v4.5.0 |
 
 ## Resources
 
