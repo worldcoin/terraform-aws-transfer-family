@@ -58,6 +58,7 @@ resource "aws_iam_role_policy" "sftp_user_policies" {
         Action = [
           "s3:PutObject",
           "s3:GetObject",
+          "s3:GetObjectVersion",
           "s3:DeleteObject"
         ]
         Resource = ["${var.s3_bucket_arn}/*"]
