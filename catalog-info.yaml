@@ -1,19 +1,19 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  annotations: 
+  annotations:
     github.com/project-slug: worldcoin/terraform-aws-transfer-family
-  tags: ["code-lang:Terraform HCL"]
+  tags: ['code-lang:Terraform HCL']
   description: Fork of https://github.com/aws-ia/terraform-aws-transfer-family
   links:
-  - title: Linear
-    url: PLACEHOLDER-ADD-LINEAR-URL
-  - title: Documentation
-    url: PLACEHOLDER-ADD-DOCUMENTATION-URL
-  - title: Slack
-    url: PLACEHOLDER-ADD-SLACK-URL
+    - title: Linear
+      url: PLACEHOLDER-ADD-LINEAR-URL
+    - title: Documentation
+      url: PLACEHOLDER-ADD-DOCUMENTATION-URL
+    - title: Slack
+      url: PLACEHOLDER-ADD-SLACK-URL
   name: terraform-aws-transfer-family
-spec: 
+spec:
   lifecycle: production
   owner: team-infrastructure
   type: library
