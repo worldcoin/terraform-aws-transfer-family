@@ -14,13 +14,13 @@ resource "random_pet" "name" {
 }
 
 locals {
-  server_name               = "transfer-server-${random_pet.name.id}"
-  users                     = var.users_file != null ? (fileexists(var.users_file) ? csvdecode(file(var.users_file)) : []) : [] # Read users from CSV
-  vpc_id                    = module.vpc.vpc_attributes.id
-  public_subnets            = flatten([for _, value in module.vpc.public_subnet_attributes_by_az : [value.id]])
-  ingress_cidr_blocks_list  = [for cidr in split(",", var.sftp_ingress_cidr_block) : trimspace(cidr)]
-  egress_cidr_blocks_list   = [for cidr in split(",", var.sftp_egress_cidr_block) : trimspace(cidr)]
-  az_count                  = 2
+  server_name              = "transfer-server-${random_pet.name.id}"
+  users                    = var.users_file != null ? (fileexists(var.users_file) ? csvdecode(file(var.users_file)) : []) : [] # Read users from CSV
+  vpc_id                   = module.vpc.vpc_attributes.id
+  public_subnets           = flatten([for _, value in module.vpc.public_subnet_attributes_by_az : [value.id]])
+  ingress_cidr_blocks_list = [for cidr in split(",", var.sftp_ingress_cidr_block) : trimspace(cidr)]
+  egress_cidr_blocks_list  = [for cidr in split(",", var.sftp_egress_cidr_block) : trimspace(cidr)]
+  az_count                 = 2
 }
 
 data "aws_caller_identity" "current" {}
@@ -30,10 +30,10 @@ data "aws_caller_identity" "current" {}
 ###################################################################
 module "transfer_server" {
   source = "../.."
-  
-  domain                   = "S3"
-  protocols                = ["SFTP"]
-  endpoint_type            = "VPC"
+
+  domain        = "S3"
+  protocols     = ["SFTP"]
+  endpoint_type = "VPC"
   endpoint_details = {
     address_allocation_ids = aws_eip.sftp[*].allocation_id
     security_group_ids     = [aws_security_group.sftp.id]
@@ -50,12 +50,12 @@ module "transfer_server" {
   log_retention_days       = 30 # This can be modified based on requirements
   log_group_kms_key_id     = aws_kms_key.transfer_family_key.arn
   logging_role             = var.logging_role
-  workflow_details         = var.workflow_details 
+  workflow_details         = var.workflow_details
 }
 
 module "sftp_users" {
-  source = "../../modules/transfer-users"
-  users  = local.users
+  source           = "../../modules/transfer-users"
+  users            = local.users
   create_test_user = true # Test user is for demo purposes. Key and Access Management required for the created secrets 
 
   server_id = module.transfer_server.server_id
@@ -70,11 +70,11 @@ module "sftp_users" {
 # Create VPC for Transfer Server
 ###################################################################
 module "vpc" {
-  source   = "git::https://github.com/aws-ia/terraform-aws-vpc.git?ref=v4.5.0"
+  source = "git::https://github.com/aws-ia/terraform-aws-vpc.git?ref=v4.5.0"
 
-  name                          = "${local.server_name}-vpc"
-  cidr_block                    = "10.0.0.0/16"
-  az_count                      = local.az_count
+  name       = "${local.server_name}-vpc"
+  cidr_block = "10.0.0.0/16"
+  az_count   = local.az_count
 
   subnets = {
     public = {
@@ -94,10 +94,10 @@ resource "aws_eip" "sftp" {
 }
 
 resource "aws_security_group" "sftp" {
-  name                    = "${local.server_name}-sftp-sg"
-  description             = "Security group for VPC endpoint of AWS Transfer Family SFTP"
-  vpc_id                  = local.vpc_id
-  revoke_rules_on_delete  = true
+  name                   = "${local.server_name}-sftp-sg"
+  description            = "Security group for VPC endpoint of AWS Transfer Family SFTP"
+  vpc_id                 = local.vpc_id
+  revoke_rules_on_delete = true
 
   tags = {
     Environment = var.stage
