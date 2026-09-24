@@ -15,5 +15,5 @@ output "sftp_bucket_name" {
 
 output "user_details" {
   description = "Map of users with their details including secret names and ARNs"
-  value = module.sftp_users.user_details
+  value       = module.sftp_users.user_details
 }

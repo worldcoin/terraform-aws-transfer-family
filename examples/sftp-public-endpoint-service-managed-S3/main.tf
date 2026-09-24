@@ -25,7 +25,7 @@ data "aws_caller_identity" "current" {}
 ###################################################################
 module "transfer_server" {
   source = "../.."
-  
+
   domain                   = "S3"
   protocols                = ["SFTP"]
   endpoint_type            = "PUBLIC"
@@ -39,12 +39,12 @@ module "transfer_server" {
   log_retention_days       = 30 # This can be modified based on requirements
   log_group_kms_key_id     = aws_kms_key.transfer_family_key.arn
   logging_role             = var.logging_role
-  workflow_details         = var.workflow_details 
+  workflow_details         = var.workflow_details
 }
 
 module "sftp_users" {
-  source = "../../modules/transfer-users"
-  users  = local.users
+  source           = "../../modules/transfer-users"
+  users            = local.users
   create_test_user = true # Test user is for demo purposes. Key and Access Management required for the created secrets 
 
   server_id = module.transfer_server.server_id
